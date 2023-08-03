@@ -8,6 +8,11 @@ describe("Unit testss for notifications", () => {
       context: "customer",
     };
 
+    const errorPrudct = {
+      message: "error message",
+      context: "product",
+    };
+
     notification.addError(error);
 
     expect(notification.messages("customer")).toBe("customer: error message,");
@@ -17,6 +22,7 @@ describe("Unit testss for notifications", () => {
       context: "customer",
     };
     notification.addError(error2);
+   
 
     expect(notification.messages("customer")).toBe(
       "customer: error message,customer: error message2,"
@@ -27,12 +33,18 @@ describe("Unit testss for notifications", () => {
       context: "order",
     };
     notification.addError(error3);
+    notification.addError(errorPrudct);
+
+    
+    expect(notification.messages("product")).toBe(
+      "product: error message,"
+    );
 
     expect(notification.messages("customer")).toBe(
       "customer: error message,customer: error message2,"
     );
     expect(notification.messages()).toBe(
-      "customer: error message,customer: error message2,order: error message3,"
+      "customer: error message,customer: error message2,order: error message3,product: error message,"
     );
   });
 
